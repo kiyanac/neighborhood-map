@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import * as BooksAPI from './BooksAPI'
-//import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import Books from './Books'
 import Main from './Main'
 
@@ -33,30 +33,27 @@ showResults = (search) => {
     return (
           <div className="search-books">
             <div className="search-books-bar">
-              <a to="/main" className="close-search" 
-          // onClick={() => this.setState({ showSearchPage: false })}
->Close</a>
+              <Link to="/" className="close-search"
+	>Close</Link>
               <div className="search-books-input-wrapper">
-              
                 <input type="text" placeholder="Search by title or author"
-value={this.state.search}
-onChange={(event) => this.updateSearch(event.target.value)}/>
-
+                value={this.state.search}
+                onChange={(event) => this.updateSearch(event.target.value)}/>
               </div>
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-{this.state.searchedBooks.map(searchedBook => (<li key={searchedBook.id}>
- <Books
- book={searchedBook}
-changeShelf={this.props.changeShelf}
-/>
-</li>
-))}
-</ol>
+              {this.state.searchedBooks.map(searchedBook => (<li key={searchedBook.id}>
+                <Books
+                book={searchedBook}
+                changeShelf={this.props.changeShelf}
+                />
+                </li>
+              ))}
+              </ol>
             </div>
           </div>
-        )   
+        )
   }
 }
 
