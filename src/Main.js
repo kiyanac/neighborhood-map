@@ -1,11 +1,9 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Books from './Books'
-import Search from './Search'
 
 class Main extends Component {
   render() {
-        console.log(this.props.books);
     return (
 <div className="list-books">
             <div className="list-books-title">
