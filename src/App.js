@@ -25,10 +25,6 @@ changeShelf = (book, shelf) => {
     })
 }
 
-// is this needed?
-removeFromSearch() {
-}
-
   render() {
     return (
       <div className="app">
@@ -44,6 +40,7 @@ removeFromSearch() {
 <Route path="/search" render={() => (
  <Search
        changeShelf={this.changeShelf}
+       books={this.state.books}
   />
 )}
 />
