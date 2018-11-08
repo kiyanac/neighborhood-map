@@ -9,14 +9,14 @@ class Search extends Component {
       searchedBooks: []
   }
 
-  updateSearch = (search) => {
-    this.setState({search: search })
-    this.showResults(search)
-  }
+    updateSearch = (search) => {
+      this.setState({search: search })
+      this.showResults(search)
+    }
 
 showResults = (search) => {
   if(search) {
-	BooksAPI.search(search).then((searchedBooks) => {
+		BooksAPI.search(search).then((searchedBooks) => {
       if(searchedBooks.error) {
         this.setState({ searchedBooks: []})
       }else{
@@ -32,37 +32,33 @@ showResults = (search) => {
     return (
           <div className="search-books">
             <div className="search-books-bar">
-              <Link to="/" className="close-search" 
-		>Close</Link>
+              <Link to="/" className="close-search" >Close</Link>
               <div className="search-books-input-wrapper">
                 <input type="text" placeholder="Search by title or author"
-value={this.state.search}
 onChange={(event) => this.updateSearch(event.target.value)}/>
-
               </div>
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-{this.state.searchedBooks.map(searchedBook => {
- 
-  let value = "none";
- this.props.books.map(books => (
-  books.id === searchedBook.id ?
-  value = books.shelf : ''
-  
-)); 
- return (<li key={searchedBook.id}>
- <Books
- book={searchedBook}
-currentShelf={value}
-       changeShelf={this.props.changeShelf}
+    {this.state.searchedBooks.map(searchedBook => {
 
-	/>
-</li>
-)
-})
-}
-</ol>
+      let value = "none";
+     this.props.books.map(books => (
+      books.id === searchedBook.id ?
+      value = books.shelf : ''
+
+    )); 
+ return (<li key={searchedBook.id}>
+         <Books
+            book={searchedBook}
+            currentShelf={value}
+            changeShelf={this.props.changeShelf}
+          />
+      </li>
+      )
+		})
+	}
+					</ol>
             </div>
           </div>
         )   
@@ -70,3 +66,4 @@ currentShelf={value}
 }
 
 export default Search
+
