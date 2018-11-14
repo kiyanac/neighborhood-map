@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Styles.css';
-import FourSquare from './API.js';
-//import axios from 'axios';
+//import FourSquare from './API.js';
+import axios from 'axios';
 
 class App extends Component {
   state = {
@@ -9,17 +9,36 @@ class App extends Component {
     venues: []
   }
 componentDidMount() {
-     this.showMap()
-  FourSquare.search({
-    near:"Dallas, TX",
-    query:"mall"
-  }).then(results => console.log(results));
+	this.getLocations()
+  
   }
 
 showMap = () => {
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBTVFVjqLRQAvF8dRZwr6g-GadDHiXxkF8&callback=initMap");
     window.initMap = this.initMap
   }
+
+getLocations = () => {
+  const endPoint = "https://api.foursquare.com/v2/venues/explore?"
+  const parameters = {
+    client_id:"RJYPCQBRP0DWTBJOOI00AP2L2ZSP5HWG0UJUL2ADLNUVERQX",
+    client_secret:"05FGCTAGUVT1KEARFJQM3KZ0NVHLIZG4S211AMHGIQXEVIDQ",
+    v:"20181113",
+    near:"Dallas, TX",
+    query:"mall"
+  }
+  
+  axios.get(endPoint + new URLSearchParams(parameters))
+  .then(response => {
+    this.setState({
+      venues: response.data.response.groups[0].items
+    }, this.showMap()
+)
+  })
+  .catch(error => {
+    alert("Did not load " + error)
+  })
+}
 
 initMap = () => {
         const map = new window.google.maps.Map(document.getElementById('map'), {
