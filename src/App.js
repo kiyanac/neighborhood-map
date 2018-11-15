@@ -25,7 +25,8 @@ getLocations = () => {
     client_secret:"05FGCTAGUVT1KEARFJQM3KZ0NVHLIZG4S211AMHGIQXEVIDQ",
     v:"20181113",
     near:"Dallas, TX",
-    query:"mall"
+    query:"mall",
+    limit: 5
   }
   
   axios.get(endPoint + new URLSearchParams(parameters))
@@ -44,30 +45,35 @@ initMap = () => {
         const map = new window.google.maps.Map(document.getElementById('map'), {
             center: { lat: 32.7767, lng: -96.7970 },
             zoom: 12
-        });
+        })
   		/*
   		for(let i = 0; i < venues.length; i++) {
           const position = venues[i].location;
           const title = venues[i].title;
         } */
+        const infoWindow = new window.google.maps.InfoWindow();
+  
   		this.state.venues.map(mall => {
+                    
+          const content = `${mall.venue.name} "/n" ${mall.venue.location.address}`;
+        
           const marker = new window.google.maps.Marker({
           position: {lat: mall.venue.location.lat, lng: mall.venue.location.lat},
-          //position: {lat: response.venues.location.lat, lng: response.venues.location.lng}
+            //position: new window.google.maps.LatLng(mall.venue.location.lat, mall.venue.location.lat)
           animation: window.google.maps.Animation.DROP,
           map: map,
-          title: 'First Marker!'
+          title: mall.venue.name
         });
   		//const mall = access foursqare data
   		//Add it to venues: []
   		//this.state.venues.push(marker);
   		this.state.markers.push(marker)
-      //console.log(this.state.markers)
+      console.log(content)
   
-  		const infoWindow = new window.google.maps.InfoWindow({
-          content:'hello'
-        });
+  		
   		marker.addListener('click', function() {
+          infoWindow.setContent(content)
+          
           infoWindow.open(map, marker);
         })
           return mall;
