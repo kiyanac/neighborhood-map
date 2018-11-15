@@ -55,7 +55,7 @@ initMap = () => {
   
   		this.state.venues.map(mall => {
                     
-          const content = `${mall.venue.name} "/n" ${mall.venue.location.address}`;
+          const content = `${mall.venue.name} \n ${mall.venue.location.address} \n ${mall.venue.photos}`;
         
           const marker = new window.google.maps.Marker({
           position: {lat: mall.venue.location.lat, lng: mall.venue.location.lat},
