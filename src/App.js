@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Styles.css';
 //import FourSquare from './API.js';
+import SideBar from './SideBar';
 import axios from 'axios';
 
 class App extends Component {
@@ -41,40 +42,38 @@ getLocations = () => {
   })
 }
 
+//linkToMarker = venue 
+
 initMap = () => {
         const map = new window.google.maps.Map(document.getElementById('map'), {
             center: { lat: 32.7767, lng: -96.7970 },
             zoom: 12
         })
-  		/*
-  		for(let i = 0; i < venues.length; i++) {
-          const position = venues[i].location;
-          const title = venues[i].title;
-        } */
+
         const infoWindow = new window.google.maps.InfoWindow();
   
-  		this.state.venues.map(mall => {
-                    
-          const content = `${mall.venue.name} \n ${mall.venue.location.address} \n ${mall.venue.photos}`;
-        
-          const marker = new window.google.maps.Marker({
-          position: {lat: mall.venue.location.lat, lng: mall.venue.location.lat},
-            //position: new window.google.maps.LatLng(mall.venue.location.lat, mall.venue.location.lat)
-          animation: window.google.maps.Animation.DROP,
-          map: map,
-          title: mall.venue.name
-        });
+  		this.state.venues.forEach(mall => {
+          const position = {lat: mall.venue.location.lat, 
+                            lng: mall.venue.location.lng};
+                            
+           mall.marker = new window.google.maps.Marker({
+            position, 
+            map: map,
+            animation: window.google.maps.Animation.DROP,
+            title: mall.venue.name
+        }); 
+          const content = `<h1>${mall.venue.name}</h1> \n <p>${mall.venue.location.address}</p> \n ${mall.venue.photos}`;
   		//const mall = access foursqare data
   		//Add it to venues: []
   		//this.state.venues.push(marker);
-  		this.state.markers.push(marker)
+  		//this.state.markers.push(marker)
       console.log(content)
   
   		
-  		marker.addListener('click', function() {
+  		mall.marker.addListener('click', function() {
           infoWindow.setContent(content)
           
-          infoWindow.open(map, marker);
+          infoWindow.open(map, mall.marker);
         })
           return mall;
         })
@@ -84,13 +83,13 @@ initMap = () => {
    
     return (
       <div className="app">
-        <div>
+        
+      	<SideBar {...this.state}/>
+      <div id="map">
+<div className="title">
           <h1>Dallas Malls</h1>
         </div>
-      <div id="map">
-
 </div>
-      
       </div>
     );
   }
