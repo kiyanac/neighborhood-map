@@ -5,6 +5,35 @@ body {
 #map {
   width: 100%;
   height: 100vh;
+}.app {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.sideBar {
+  width: 25%;
+  displey: flex;
+  flex-flow: row nowrap;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+}
+
+#map {
+  width: 75%;
+  height: 100vh;
+}
+
+.title {
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
 }
 
 h1 {
