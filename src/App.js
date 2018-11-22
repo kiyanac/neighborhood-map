@@ -19,7 +19,7 @@ showMap = () => {
     window.initMap = this.initMap
   }
 
-getLocations = () => {
+getLocations = (search) => {
   const endPoint = "https://api.foursquare.com/v2/venues/explore?"
   const parameters = {
     client_id:"RJYPCQBRP0DWTBJOOI00AP2L2ZSP5HWG0UJUL2ADLNUVERQX",
@@ -42,7 +42,10 @@ getLocations = () => {
   })
 }
 
-//linkToMarker = venue 
+listClick = venue => {
+  const marker = this.state.markers.find(marker => marker.id = venue.id);
+  console.log(venue)
+}
 
 initMap = () => {
         const map = new window.google.maps.Map(document.getElementById('map'), {
@@ -63,10 +66,7 @@ initMap = () => {
             title: mall.venue.name
         }); 
           const content = `<h1>${mall.venue.name}</h1> \n <p>${mall.venue.location.address}</p> \n ${mall.venue.photos}`;
-  		//const mall = access foursqare data
-  		//Add it to venues: []
-  		//this.state.venues.push(marker);
-  		//this.state.markers.push(marker)
+
       console.log(content)
   
   		
@@ -84,7 +84,10 @@ initMap = () => {
     return (
       <div className="app">
         
-      	<SideBar {...this.state}/>
+      	<SideBar 
+      		venues={this.state.venues}
+			listClick={this.listClick}
+		/>
       <div id="map">
 <div className="title">
           <h1>Dallas Malls</h1>
