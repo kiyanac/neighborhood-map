@@ -13,7 +13,7 @@ componentDidMount() {
 	this.getLocations()
   
   }
-
+//
 showMap = () => {
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBTVFVjqLRQAvF8dRZwr6g-GadDHiXxkF8&callback=initMap");
     window.initMap = this.initMap
