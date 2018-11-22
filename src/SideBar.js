@@ -1,54 +1,46 @@
 import React, {Component} from 'react';
-import MallList from './MallList';
+import PropTypes from 'prop-types'
+import escapeRegExp from 'escape-string-regexp'
 //import FourSquare from './API.js';
 
-
 class SideBar extends Component {
+   static propTypes = {
+    venues: PropTypes.array.isRequired
+  }
+
   state = {
     search: '',
-    searchedMall: []
   }
-/*
-showResults = () => {
-  if (this.state.search !== "") {
-    const searchedMall = this.props.venues.filter(venue => venue.name
-                          .toLowerCase()
-                          .includes(this.state.search.toLowerCase())
-                           );
-    return searchedMall;
-  }
-  return this.props.venues;
-};
-*/
 
-updateSearch = (search) => {
+onChange = (search) => {
       this.setState({search: search })
-      //this.showResults(search)
-  console.log(search);
     }
 
-/*
-showResults = (search) => {
-  if(search) {
-		this.props.venue.name.search(search).then((searchedMall) => {
-      if(searchedMall.error) {
-        this.setState({ searchedMall: []})
-      }else{
-        this.setState({searchedMall:searchedMall, search:search})
-      }
-    })
-  }else{
-    this.setState({ searchedMall: []})
-  }
-}
-*/
   render = () => {
+    console.log("Props", this.props)
+    let showResults
+    if (this.state.search) {
+      const match = new RegExp(escapeRegExp(this.state.search), 'i')
+      showResults = this.props.venues.filter((venue) => match.test(venue.venue.name))
+    }else {
+      showResults = this.props.venues
+    }
+    
     return (
-      <div className="sideBar">
-      	<input type="search" placeholder="Filter Locations" onChange={(event) => this.updateSearch(event.target.value)}/>
-        <MallList {...this.props}
-			//searchedMall={this.showResults()}
-		/>
+      <div className="side-bar">
+		<div className="search">
+      		<input className="mall-list" type="text" 
+      			placeholder="Filter Locations" 
+      			value={this.state.search}
+      			onChange={(event) => this.onChange(event.target.value)}/>
+		</div> 
+        <ol className="mall-list">
+      		{showResults.map((venue) => (
+         		<li key={venue.venue.id} className="list-item" onClick={() => this.props.listClick(venue.venue.name)}> 
+					{venue.venue.name}
+				</li>
+))}
+      	</ol>
       </div>
     );
   }
