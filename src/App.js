@@ -44,7 +44,10 @@ getLocations = (search) => {
 
 listClick = venue => {
   const marker = this.state.markers.find(marker => marker.id = venue.id);
-  console.log(venue)
+	/*if (marker.id !== venue.id) {
+      	   marker.isVisible = false;
+  	} */
+  console.log(marker)
 }
 
 initMap = () => {
