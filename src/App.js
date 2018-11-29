@@ -54,9 +54,19 @@ markerCenter = () => {
     const { markers } = this.state;
     markers.map(marker => {
       if (venue.venue.name === marker.title) {
-        //marker.setVisible(true)
-        marker.position = venue.venue.location
-        console.log("test");
+         const infoWindow = new window.google.maps.InfoWindow();
+        
+         const filteredMarkers = [];
+        
+         const content = `<h1>${venue.venue.name}</h1> \n <p>${
+          venue.venue.location.address
+          }</p> \n ${venue.venue.photos}`;
+        
+         infoWindow.setContent(content);
+         infoWindow.open(this.map, marker);
+         //infoWindow.marker = null;
+         //this.openWindow = infoWindow;
+         console.log("test");
       }
           return venue;
     });
