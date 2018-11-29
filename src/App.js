@@ -7,7 +7,9 @@ import axios from "axios";
 class App extends Component {
   state = {
     markers: [],
-    venues: []
+    venues: [],
+    map: null,
+    infoWindow: null
   };
   componentDidMount() {
     this.getLocations();
@@ -46,41 +48,37 @@ class App extends Component {
       });
   };
 
-markerCenter = () => {
-  //const { markers } = this.state;
-}
+  markerCenter = () => {
+    //const { markers } = this.state;
+  };
 
   listClick = venue => {
-    const { markers } = this.state;
+    const { markers, map, infoWindow } = this.state;
     markers.map(marker => {
       if (venue.venue.name === marker.title) {
-         const infoWindow = new window.google.maps.InfoWindow();
-        
-         const filteredMarkers = [];
-        
-         const content = `<h1>${venue.venue.name}</h1> \n <p>${
+        const content = `<h1>${venue.venue.name}</h1> \n <p>${
           venue.venue.location.address
-          }</p> \n ${venue.venue.photos}`;
-        
-         infoWindow.setContent(content);
-         infoWindow.open(this.map, marker);
-         //infoWindow.marker = null;
-         //this.openWindow = infoWindow;
-         console.log("test");
+        }</p> \n ${venue.venue.photos}`;
+
+        infoWindow.setContent(content);
+        infoWindow.open(map, marker);
+        //infoWindow.marker = null;
+        //this.openWindow = infoWindow;
+        console.log("test");
       }
-          return venue;
+      return venue;
     });
   };
 
-markerClick = marker => {
-  const { venues } = this.state;
-  venues.map(venue => {
-    if (marker.title === venue.venue.name) {
-      console.log("test 2");
-    }
-    return marker;
-  });
-};
+  markerClick = marker => {
+    const { venues } = this.state;
+    venues.map(venue => {
+      if (marker.title === venue.venue.name) {
+        console.log("test 2");
+      }
+      return marker;
+    });
+  };
 
   initMap = () => {
     const map = new window.google.maps.Map(document.getElementById("map"), {
@@ -117,12 +115,16 @@ markerClick = marker => {
       console.log(mall.marker);
       return mall;
     });
-    this.setState({ markers });
+    this.setState({ markers, map, infoWindow });
   };
   render = () => {
     return (
       <div className="app">
-        <SideBar venues={this.state.venues} listClick={this.listClick} markerClick={this.markerClick} />
+        <SideBar
+          venues={this.state.venues}
+          listClick={this.listClick}
+          markerClick={this.markerClick}
+        />
         <div id="map">
           <div className="title">
             <h1>Dallas Malls</h1>
