@@ -1,3 +1,4 @@
+// Help from: Forrest Walker
 class APIHelp {
   static baseURL() {
     return "https://api.foursquare.com/v2";
