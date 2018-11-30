@@ -8,7 +8,62 @@ body {
 }.app {
   height: 100vh;
   width: 100vw;
+  display: flex;.app {
+  height: 100vh;
+  width: 100vw;
   display: flex;
+}
+
+.sideBar {
+  margin-right: 1%;
+  position: absolute;
+  width: 25%;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+}
+
+#map {
+  position: relative;
+  width: 75%;
+  height: 100vh;
+  margin-top: 75px;
+  margin-left: 10px;
+}
+
+.title {
+  position: absolute;
+  width: 100%;
+  top: 0px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.list-item {
+  list-style: none;
+  text-align: center;
+  padding: 5%;
+  margin: 5%;
+  border: 1px solid #dedede;
+  cursor: pointer;
+}
+
+ol {
+  margin-left: -15%;
+}
+
+.search {
+  margin-top: 75px;
+  margin-bottom: 15px;
+  position: relative;
+  width: 25%;
+  top: 0;
+  left: 40;
+}
   flex-flow: row nowrap;
 }
 
