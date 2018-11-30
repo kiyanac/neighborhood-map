@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import escapeRegExp from "escape-string-regexp";
-//import FourSquare from './API.js';
+//import Drawer from '@material-ui/core/Drawer'; doug brown 28:00
+// return filtered list Help from: drunkenkismet
 
 class SideBar extends Component {
   static propTypes = {
@@ -9,28 +10,29 @@ class SideBar extends Component {
   };
 
   state = {
-    search: ""
+    search: "",
+    open: false
   };
 
   onChange = search => {
-   const markers = this.state.markers;
+   const markers = this.props.markers;
    markers.forEach(marker => {
    marker.name.toLowerCase().includes(search.toLowerCase()) === true ?
    marker.setVisible(true) :
    marker.setVisible(false)
-      //console.log(markers);
-});
+    });
     this.setState({ search: search });
   };
 
   render = () => {
+    //Help from: Udacity Classroom
     console.log("Props", this.props);
     let showResults;
     if (this.state.search) {
       const match = new RegExp(escapeRegExp(this.state.search), "i");
       showResults = this.props.venues.filter(venue =>
-        match.test(venue.venue.name),
-                                                   //marker.setVisible(true)
+        match.test(venue.venue.name)
+                                                   
       );
     } else {
       showResults = this.props.venues;
@@ -38,7 +40,7 @@ class SideBar extends Component {
 
     return (
       <div className="side-bar">
-        <div className="search">
+        <div className="search" aria-label="search">
           <input
             className="mall-list"
             type="text"
@@ -47,12 +49,13 @@ class SideBar extends Component {
             onChange={event => this.onChange(event.target.value)}
           />
         </div>
-        <ol className="mall-list">
+        <ol className="mall-list" aria-label="list">
           {showResults.map(venue => (
             <li
               key={venue.venue.id}
               className="list-item"
-              onClick={() => this.props.listClick(venue)}>
+              onClick={() => this.props.listClick(venue)}
+              tabIndex="0">
               {venue.venue.name}
             </li>
           ))}
