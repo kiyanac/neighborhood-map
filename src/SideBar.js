@@ -13,6 +13,13 @@ class SideBar extends Component {
   };
 
   onChange = search => {
+   const markers = this.state.markers;
+   markers.forEach(marker => {
+   marker.name.toLowerCase().includes(search.toLowerCase()) === true ?
+   marker.setVisible(true) :
+   marker.setVisible(false)
+      //console.log(markers);
+});
     this.setState({ search: search });
   };
 
