@@ -1,27 +1,54 @@
 import React, { Component } from "react";
 import "./Styles.css";
-//import FourSquare from './API.js';
 import SideBar from "./SideBar";
+import Heading from "./Heading"; 
 import axios from "axios";
 
 class App extends Component {
   state = {
     markers: [],
+    showResults: [],
     venues: [],
     map: null,
-    infoWindow: null
+    infoWindow: null,
+    open: false
   };
+
   componentDidMount() {
     this.getLocations();
   }
-  //
+  
+styles = {
+    menuButton: {
+      marginLeft: 10,
+      position: "absolute",
+      left: 10,
+      top: 20,
+      padding: 10,
+      borderRadius: 5
+    },
+    hide: {
+      display: 'none'
+    },
+    header: {
+      marginTop: "0px"
+    }
+  };
+
+toggleMenu = () => {
+    this.setState({
+      open: !this.state.open
+    });
+  console.log("open");
+  }
+
   showMap = () => {
     loadScript(
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyBTVFVjqLRQAvF8dRZwr6g-GadDHiXxkF8&callback=initMap"
     );
     window.initMap = this.initMap;
   };
-
+// Get API data Help from: Forrest Walker
   getLocations = search => {
     const endPoint = "https://api.foursquare.com/v2/venues/explore?";
     const parameters = {
@@ -38,7 +65,8 @@ class App extends Component {
       .then(response => {
         this.setState(
           {
-            venues: response.data.response.groups[0].items
+            venues: response.data.response.groups[0].items,
+            markers: response.data.response.groups[0].items
           },
           this.showMap()
         );
@@ -46,31 +74,26 @@ class App extends Component {
       .catch(error => {
         alert("Did not load " + error);
       });
-  };
-
-  markerCenter = () => {
-    //const { markers } = this.state;
-  };
-
+  }; //
+// listClick Help from: drunkenkismet
   listClick = venue => {
     const { markers, map, infoWindow } = this.state;
     markers.map(marker => {
       if (venue.venue.name === marker.title) {
         const content = `<h1>${venue.venue.name}</h1> \n <p>${
           venue.venue.location.address
-        }</p> \n ${venue.venue.photos}`;
+        }</p>`;
 
         infoWindow.setContent(content);
         infoWindow.open(map, marker);
-        //infoWindow.marker = null;
-        //this.openWindow = infoWindow;
-        console.log("test");
+        marker.setAnimation(window.google.maps.Animation.BOUNCE);
+        setTimeout(function(){ marker.setAnimation(null); }, 1125);
       }
       return venue;
     });
   };
 
-  markerClick = marker => {
+ /* markerClick = marker => {
     const { venues } = this.state;
     venues.map(venue => {
       if (marker.title === venue.venue.name) {
@@ -78,8 +101,8 @@ class App extends Component {
       }
       return marker;
     });
-  };
-
+  }; */
+// Map set up Help from: Udacity Classroom lessons/Yahya Elharony
   initMap = () => {
     const map = new window.google.maps.Map(document.getElementById("map"), {
       center: { lat: 32.7767, lng: -96.797 },
@@ -104,31 +127,33 @@ class App extends Component {
       });
       const content = `<h1>${mall.venue.name}</h1> \n <p>${
         mall.venue.location.address
-      }</p> \n ${mall.venue.photos}`;
+      }</p>`;
+      
       mall.marker.addListener("click", function() {
         infoWindow.setContent(content);
 
         infoWindow.open(map, mall.marker);
-        //this.markerClick();
       });
       markers.push(mall.marker);
-      console.log(mall.marker);
       return mall;
     });
     this.setState({ markers, map, infoWindow });
   };
+
   render = () => {
     return (
       <div className="app">
+      <button onClick={this.toggleMenu} style={this.styles.menuButton}>
+            <i className="fa fa-bars">X</i>
+          </button>
         <SideBar
           venues={this.state.venues}
           listClick={this.listClick}
-          markerClick={this.markerClick}
+          open={this.state.open}
+          toggleMenu={this.toggleMenu}
         />
-        <div id="map">
-          <div className="title">
-            <h1>Dallas Malls</h1>
-          </div>
+        <Heading />
+        <div id="map" role="application" aria-label="map">
         </div>
       </div>
     );
@@ -137,6 +162,7 @@ class App extends Component {
 
 export default App;
 
+//Help from: Forrest Walker
 function loadScript(url) {
   var index = window.document.getElementsByTagName("script")[0];
   var script = window.document.createElement("script");
