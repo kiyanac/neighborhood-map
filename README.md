@@ -9,12 +9,12 @@ This application uses Foursquare data. Map was built using "google-maps-react"
 In terminal, type npm install then npm start to install dependencies, and run application. Project files files can be found on Github: https://github.com/kiyanac/neighborhood-map
 
 ## Resources used:
-Udacity Knowledge Forum
-Udacity Classroom lessons
-Stack Overflow
-drunkenkismet on Slack
-Yahya Elharony: https://www.youtube.com/channel/UCcWSbBe_s-T_gZRnqFbtyIA
-Forrest Walker: https://www.youtube.com/watch?v=lDVaZY0aG2w&list=PL4rQq4MQP1crXuPtruu_eijgOUUXhcUCP&t=0s&index=7
-Doug Brown: https://www.youtube.com/watch?v=NVAVLCJwAAo&feature=youtu.be
+*Udacity Knowledge Forum
+*Udacity Classroom lessons
+*Stack Overflow
+*drunkenkismet on Slack
+*Yahya Elharony: https://www.youtube.com/channel/UCcWSbBe_s-T_gZRnqFbtyIA
+*Forrest Walker: https://www.youtube.com/watch?v=lDVaZY0aG2w&list=PL4rQq4MQP1crXuPtruu_eijgOUUXhcUCP&t=0s&index=7
+*Doug Brown: https://www.youtube.com/watch?v=NVAVLCJwAAo&feature=youtu.be
 
 
